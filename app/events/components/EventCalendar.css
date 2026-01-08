@@ -1,0 +1,181 @@
+/* ================================
+   NSBE Event Calendar Theme Colors
+   ================================ */
+:root {
+    --primary: #1f8f4a;
+    /* colors.primary */
+    --black: #000000;
+    /* colors.black */
+    --yellow: #f4c430;
+    /* colors.yellow */
+    --gray: #d1d5db;
+    /* colors.gray */
+    --red: #dc2626;
+    /* colors.red */
+    --white: #ffffff;
+}
+
+/* ================================
+   Calendar Layout
+   ================================ */
+.react-calendar {
+    width: 100% !important;
+    border-radius: 16px;
+    border: none;
+    font-family: "nunito", sans-serif;
+}
+
+/* Increase size of calendar cells */
+.react-calendar__tile {
+    height: 120px;
+    max-width: 100%;
+    text-align: left;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 12px;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+/* Hover state */
+.react-calendar__tile:enabled:hover {
+    background-color: #f9fafb;
+    transform: translateY(-2px);
+}
+
+/* ================================
+   Navigation Bar
+   ================================ */
+.react-calendar__navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: var(--black);
+    color: var(--white);
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+}
+
+/* Month / Year Label */
+.react-calendar__navigation__label {
+    background-color: transparent;
+    color: var(--white);
+    border-radius: 8px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.react-calendar__navigation__label:hover,
+.react-calendar__navigation__label:focus {
+    background-color: var(--yellow);
+    color: var(--black);
+    outline: none;
+}
+
+/* Navigation arrows */
+.react-calendar__navigation__arrow {
+    border-radius: 8px;
+    height: 36px;
+    font-size: 1.2rem;
+    color: var(--white);
+    transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.react-calendar__navigation__arrow:hover,
+.react-calendar__navigation__arrow:focus {
+    color: var(--black);
+    background-color: var(--yellow);
+}
+
+/* ================================
+   Selected & Special Dates
+   ================================ */
+
+/* Selected date */
+.react-calendar__tile--active {
+    background-color: var(--primary) !important;
+    color: var(--white) !important;
+    font-weight: bold;
+}
+
+.react-calendar__tile--active:hover {
+    background-color: var(--primary);
+}
+
+/* Today */
+.react-calendar__tile--now {
+    background-color: rgba(244, 196, 48, 0.2) !important;
+    color: var(--black);
+    font-weight: bold;
+}
+
+/* ================================
+   Event Indicators
+   ================================ */
+.event-details {
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--primary);
+}
+
+/* Event text on selected day */
+.react-calendar__tile--active .event-details {
+    color: var(--white);
+}
+
+/* Dot indicator already handled inline, this aligns text weight */
+.react-calendar__tile.has-events {
+    font-weight: bold;
+}
+
+/* ================================
+   Event Image Styling
+   ================================ */
+.event-image {
+    max-width: 40%;
+    height: auto;
+    border-radius: 12px;
+    border: 3px solid var(--gray);
+}
+
+/* ================================
+   Star Badge (If Used)
+   ================================ */
+.star-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 6px;
+    position: relative;
+}
+
+.star {
+    width: 90px;
+    height: 55px;
+    background-color: var(--black);
+    clip-path: polygon(50% 0%,
+            61% 35%,
+            98% 35%,
+            68% 57%,
+            79% 91%,
+            50% 70%,
+            21% 91%,
+            32% 57%,
+            2% 35%,
+            39% 35%);
+}
+
+.star-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--yellow);
+    font-size: 10px;
+    font-weight: bold;
+    text-align: center;
+    white-space: nowrap;
+}
