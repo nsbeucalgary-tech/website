@@ -219,7 +219,7 @@ export default function TeamClient({ execs }: TeamClientProps) {
                         </button>
 
                         {/* Modal Content */}
-                        <div className="grid md:grid-cols-2 gap-0">
+                        <div className="grid md:grid-cols-2 gap-0 bg-black">
                             {/* Image Section */}
                             <div className="relative h-96 md:h-auto bg-gray-200">
                                 {activeMember.exec_picture ? (
@@ -263,9 +263,8 @@ export default function TeamClient({ execs }: TeamClientProps) {
 
                                 {activeMember.exec_bio && (
                                     <p
-                                        className="text-base leading-relaxed mb-6"
+                                        className="text-base leading-relaxed mb-6 text-white"
                                         style={{
-                                            color: colors.black,
                                             fontFamily: "nunito, sans-serif",
                                         }}
                                     >
