@@ -10,7 +10,7 @@ export interface Event {
 }
 
 // Fetch data from database (Server Component)
-async function getEvents(): Promise<Event[]> {
+export async function getEvents(): Promise<Event[]> {
     // TODO: Replace with actual database fetch
     // const events = await db.query('SELECT * FROM events ORDER BY event_time');
 
