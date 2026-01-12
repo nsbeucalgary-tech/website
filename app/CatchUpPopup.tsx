@@ -9,14 +9,7 @@ import { colors } from "./lib/helper";
 import Particles from "react-particles";
 import { Container, Engine } from "tsparticles-engine";
 import { loadFireworksPreset } from "tsparticles-preset-fireworks";
-
-interface Event {
-    event_name: string;
-    event_location: string;
-    event_time: string;
-    event_description: string;
-    event_poster: string;
-}
+import type { Event } from "./lib/type";
 
 interface CatchUpPopupProps {
     events: Event[];
@@ -197,9 +190,9 @@ export default function CatchUpPopup({ events }: CatchUpPopupProps) {
 
                         {upcomingEvents.length > 0 ? (
                             <div className="grid sm:grid-cols-2 gap-4 mb-6">
-                                {upcomingEvents.map((event, idx) => (
+                                {upcomingEvents.map((event) => (
                                     <div
-                                        key={idx}
+                                        key={event.event_id}
                                         className="bg-gray-50 rounded-xl p-4 border-2 hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
                                         style={{ borderColor: colors.gray }}
                                     >

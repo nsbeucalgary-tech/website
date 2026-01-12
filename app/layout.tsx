@@ -1,15 +1,15 @@
 import CatchUpPopup from "./CatchUpPopup";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
-import { getEvents } from "./events/page";
 import "./globals.css";
+import { getAllEvents } from "./lib/eventCall";
 
 export default async function RootLayout({
     children,
 }: {
     children: React.ReactNode;
     }) {
-    const events = await getEvents();
+    const events = await getAllEvents();
     return (
         <html lang="en">
             <body className="min-h-screen flex flex-col">

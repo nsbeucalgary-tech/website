@@ -1,0 +1,189 @@
+"use client";
+
+import { useState } from "react";
+import { Plus, Pencil, Trash2, Calendar, Clock, MapPin, LinkIcon } from "lucide-react";
+import { colors } from "@/app/lib/helper";
+import AddEventModal from "./AddEventModal";
+import { Event } from "@/app/lib/type";
+import EditEventModal from "./EditEventModal";
+import { format } from "date-fns";
+import Image from "next/image";
+import DeleteModal from "./DeleteEventModal";
+
+export default function AdminEventsPage({ events }: { events: Event[] }) {
+    const [showAddModal, setShowAddModal] = useState(false);
+    const [editingEvent, setEditingEvent] = useState<Event | null>(null);
+    const [deleteEvent, setDeleteEvent] = useState<Event | null>(null);
+
+    return (
+        <div>
+            {/* Header */}
+            <div className="flex items-center justify-between mb-8">
+                <h1
+                    className="text-4xl font-extrabold"
+                    style={{ color: colors.black }}
+                >
+                    Manage Events
+                </h1>
+
+                <button
+                    onClick={() => setShowAddModal(true)}
+                    className="flex items-center gap-2 px-6 py-3 rounded-xl font-bold hover:scale-105 transition"
+                    style={{ backgroundColor: colors.primary, color: "white" }}
+                >
+                    <Plus size={20} /> Add Event
+                </button>
+            </div>
+
+            {/* Event Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {events.map((event) => (
+                    <div
+                        key={event.event_id}
+                        className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border-2 overflow-hidden"
+                        style={{ borderColor: colors.gray }}
+                    >
+                        {/* Event Image/Poster */}
+                        <div className="relative w-full h-48 bg-gray-200">
+                            {event.event_poster ? (
+                                <Image
+                                    src={event.event_poster}
+                                    alt={event.event_name}
+                                    fill
+                                    className="object-cover"
+                                />
+                            ) : (
+                                <div
+                                    className="w-full h-full flex items-center justify-center"
+                                    style={{ color: colors.primary }}
+                                >
+                                    <Calendar className="w-20 h-20" />
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Event Details */}
+                        <div className="p-6">
+                            <div className="flex items-start justify-between mb-4">
+                                <h3
+                                    className="text-xl font-bold flex-1"
+                                    style={{
+                                        color: colors.primary,
+                                        fontFamily: "nunito, sans-serif",
+                                    }}
+                                >
+                                    {event.event_name}
+                                </h3>
+
+                                <div className="flex gap-2 ml-4">
+                                    <button
+                                        onClick={() => setEditingEvent(event)}
+                                        className="p-2 rounded-lg hover:bg-gray-100 transition-all duration-200"
+                                        aria-label="Edit event"
+                                    >
+                                        <Pencil
+                                            size={18}
+                                            style={{ color: colors.primary }}
+                                        />
+                                    </button>
+
+                                    <button
+                                        className="p-2 rounded-lg hover:bg-red-100 transition-all duration-200"
+                                        aria-label="Delete event"
+                                        onClick={() => setDeleteEvent(event)}
+                                    >
+                                        <Trash2
+                                            size={18}
+                                            style={{ color: colors.red }}
+                                        />
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Event Info */}
+                            <div
+                                className="space-y-2 text-sm mb-4"
+                                style={{ fontFamily: "nunito, sans-serif" }}
+                            >
+                                <div className="flex items-start gap-2">
+                                    <Clock
+                                        className="w-4 h-4 mt-0.5 flex-shrink-0"
+                                        style={{ color: colors.yellow }}
+                                    />
+                                    <span style={{ color: colors.black }}>
+                                        {event.event_time
+                                            ? format(
+                                                  new Date(event.event_time),
+                                                  "MMMM d, yyyy 'at' h:mm a"
+                                              )
+                                            : "No date available"}
+                                    </span>
+                                </div>
+                                <div className="flex items-start gap-2">
+                                    <MapPin
+                                        className="w-4 h-4 mt-0.5 flex-shrink-0"
+                                        style={{ color: colors.red }}
+                                    />
+                                    <span style={{ color: colors.black }}>
+                                        {event.event_location}
+                                    </span>
+                                </div>
+                            </div>
+
+                            {/* Event Link */}
+                            {event.event_link && (
+                                <div className="flex items-start gap-2 mt-2">
+                                    <LinkIcon
+                                        className="w-4 h-4 mt-0.5 flex-shrink-0"
+                                        style={{ color: colors.primary }}
+                                    />
+                                    <a
+                                        href={event.event_link}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-sm font-semibold hover:underline break-all"
+                                        style={{ color: colors.primary }}
+                                    >
+                                        Event Link
+                                    </a>
+                                </div>
+                            )}
+
+                            {/* Event Description */}
+                            {event.event_description && (
+                                <p
+                                    className="text-sm leading-relaxed"
+                                    style={{
+                                        color: colors.black,
+                                        fontFamily: "nunito, sans-serif",
+                                    }}
+                                >
+                                    {event.event_description}
+                                </p>
+                            )}
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+            {/* Modals */}
+            {showAddModal && (
+                <AddEventModal onCloseAction={() => setShowAddModal(false)} />
+            )}
+
+            {editingEvent && (
+                <EditEventModal
+                    event={editingEvent}
+                    onClose={() => setEditingEvent(null)}
+                />
+            )}
+
+            {deleteEvent && (
+                <DeleteModal
+                    event={deleteEvent}
+                    onClose={() => setDeleteEvent(null)}
+                />
+            )}
+        </div>
+    );
+}

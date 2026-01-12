@@ -4,13 +4,12 @@ import { useState, useMemo } from "react";
 import Image from "next/image";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import { format, parseISO, isSameDay } from "date-fns";
-import { MapPin, Clock, Calendar as CalendarIcon} from "lucide-react";
-import type { Event } from "@/app/events/page";
+import { format, isSameDay } from "date-fns";
+import { MapPin, Clock, Calendar as CalendarIcon, LinkIcon } from "lucide-react";
 import { colors } from "@/app/lib/helper";
-import './EventCalendar.css';
+import "./EventCalendar.css";
 import { Value } from "react-calendar/dist/shared/types.js";
-
+import { Event } from "@/app/lib/type";
 interface EventsClientProps {
     events: Event[];
 }
@@ -18,6 +17,8 @@ interface EventsClientProps {
 export default function EventsClient({ events }: EventsClientProps) {
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
     const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+    const toDate = (value: string | Date) =>
+        value instanceof Date ? value : new Date(value);
 
     // Get upcoming events (next 4)
     const upcomingEvents = useMemo(() => {
@@ -35,7 +36,7 @@ export default function EventsClient({ events }: EventsClientProps) {
     // Get events for selected date
     const selectedDateEvents = useMemo(() => {
         return events.filter((event) =>
-            isSameDay(parseISO(event.event_time), selectedDate)
+            isSameDay(toDate(event.event_time), selectedDate)
         );
     }, [events, selectedDate]);
 
@@ -46,12 +47,11 @@ export default function EventsClient({ events }: EventsClientProps) {
         setSelectedDate(value);
 
         const dayEvents = events.filter((event) =>
-            isSameDay(parseISO(event.event_time), value)
+            isSameDay(toDate(event.event_time), value)
         );
 
         setSelectedEvent(dayEvents.length > 0 ? dayEvents[0] : null);
     };
-
 
     const EventCard = ({
         event,
@@ -105,7 +105,7 @@ export default function EventsClient({ events }: EventsClientProps) {
                         />
                         <span style={{ color: colors.black }}>
                             {format(
-                                parseISO(event.event_time),
+                                toDate(event.event_time),
                                 "MMMM d, yyyy 'at' h:mm a"
                             )}
                         </span>
@@ -174,8 +174,8 @@ export default function EventsClient({ events }: EventsClientProps) {
                 />
 
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    {upcomingEvents.map((event, idx) => (
-                        <EventCard key={idx} event={event} featured />
+                    {upcomingEvents.map((event) => (
+                        <EventCard key={event.event_id} event={event} featured />
                     ))}
                 </div>
             </section>
@@ -216,19 +216,28 @@ export default function EventsClient({ events }: EventsClientProps) {
                                 tileContent={({ date }) => {
                                     const dayEvents = events.filter((event) =>
                                         isSameDay(
-                                            parseISO(event.event_time),
+                                            toDate(event.event_time),
                                             date
                                         )
                                     );
                                     return dayEvents.length > 0 ? (
-                                        <div className="flex justify-center mt-1">
-                                            <div
-                                                className="w-2 h-2 rounded-full"
+                                        <div className="mt-1 flex items-center justify-center gap-2 px-1">
+                                            <span
+                                                className="h-2 w-2 rounded-full"
                                                 style={{
                                                     backgroundColor:
                                                         colors.primary,
                                                 }}
                                             />
+                                            <p
+                                                className="max-w-[90%] truncate text-xs font-medium"
+                                                style={{
+                                                    color: colors.primary,
+                                                }}
+                                                title={dayEvents[0]?.event_name}
+                                            >
+                                                {dayEvents[0]?.event_name}
+                                            </p>
                                         </div>
                                     ) : null;
                                 }}
@@ -239,7 +248,7 @@ export default function EventsClient({ events }: EventsClientProps) {
                                     );
                                     const hasEvents = events.some((event) =>
                                         isSameDay(
-                                            parseISO(event.event_time),
+                                            toDate(event.event_time),
                                             date
                                         )
                                     );
@@ -310,7 +319,7 @@ export default function EventsClient({ events }: EventsClientProps) {
                                                     className="font-semibold"
                                                 >
                                                     {format(
-                                                        parseISO(
+                                                        toDate(
                                                             selectedEvent.event_time
                                                         ),
                                                         "EEEE, MMMM d, yyyy 'at' h:mm a"
@@ -335,7 +344,31 @@ export default function EventsClient({ events }: EventsClientProps) {
                                                     }
                                                 </span>
                                             </div>
+                                            {selectedEvent.event_link && (
+                                                <div className="flex items-start gap-3">
+                                                    <LinkIcon
+                                                        className="w-5 h-5 mt-0.5 flex-shrink-0"
+                                                        style={{
+                                                            color: colors.primary,
+                                                        }}
+                                                    />
+                                                    <a
+                                                        href={
+                                                            selectedEvent.event_link
+                                                        }
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="font-semibold hover:underline break-all"
+                                                        style={{
+                                                            color: colors.primary,
+                                                        }}
+                                                    >
+                                                        RSVP Link
+                                                    </a>
+                                                </div>
+                                            )}
                                         </div>
+
                                         <p
                                             className="text-base leading-relaxed"
                                             style={{
@@ -350,9 +383,9 @@ export default function EventsClient({ events }: EventsClientProps) {
                                 </div>
                             ) : selectedDateEvents.length > 0 ? (
                                 <div className="space-y-4">
-                                    {selectedDateEvents.map((event, idx) => (
+                                    {selectedDateEvents.map((event) => (
                                         <div
-                                            key={idx}
+                                            key={event.event_id}
                                             onClick={() =>
                                                 setSelectedEvent(event)
                                             }
@@ -378,7 +411,7 @@ export default function EventsClient({ events }: EventsClientProps) {
                                                 }}
                                             >
                                                 {format(
-                                                    parseISO(event.event_time),
+                                                    toDate(event.event_time),
                                                     "h:mm a"
                                                 )}{" "}
                                                 • {event.event_location}
