@@ -3,8 +3,8 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Linkedin, Mail, X } from "lucide-react";
-import type { Exec } from "@/app/team/page";
 import { colors } from "@/app/lib/helper";
+import { Exec } from "@/app/lib/type";
 
 interface TeamClientProps {
     execs: Exec[];
@@ -14,9 +14,9 @@ export default function TeamClient({ execs }: TeamClientProps) {
     const [activeMember, setActiveMember] = useState<Exec | null>(null);
 
     // Group members by hierarchy
-    const presidents = execs.filter((e) => e.exec_positon === 1);
-    const vicePresidents = execs.filter((e) => e.exec_positon === 2);
-    const coordinators = execs.filter((e) => e.exec_positon === 3);
+    const presidents = execs.filter((e) => e.exec_position === 0);
+    const vicePresidents = execs.filter((e) => e.exec_position === 1);
+    const coordinators = execs.filter((e) => e.exec_position === 2);
 
     const handleMemberClick = (member: Exec) => {
         setActiveMember(member);

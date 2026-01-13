@@ -10,3 +10,18 @@ export interface Event {
 }
 
 export type NewEvent = Omit<Event, "event_id">;
+
+export interface Exec {
+    exec_id: number;
+    fname: string;
+    lname: string;
+    exec_position: number;
+    exec_role: string;
+    exec_ucid: bigint;
+    exec_email: string;
+    exec_bio: string;
+    exec_link: string;
+    exec_picture: string;
+}
+
+export type NewExec = Omit<Exec, "exec_id">;
