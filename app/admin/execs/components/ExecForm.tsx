@@ -65,7 +65,7 @@ export default function ExecForm({
             return;
         }
 
-        if (file.size > 5 * 1024 * 1024) {
+        if (file.size > 2 * 1024 * 1024) {
             alert("Image size should be less than 5MB");
             return;
         }
@@ -387,7 +387,7 @@ export default function ExecForm({
                             className="text-sm text-gray-500"
                             style={{ fontFamily: "nunito, sans-serif" }}
                         >
-                            PNG, JPG, WEBP up to 5MB
+                            PNG, JPG, WEBP up to 2MB
                         </span>
                         <input
                             type="file"
