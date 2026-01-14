@@ -14,9 +14,10 @@ export default function TeamClient({ execs }: TeamClientProps) {
     const [activeMember, setActiveMember] = useState<Exec | null>(null);
 
     // Group members by hierarchy
-    const presidents = execs.filter((e) => e.exec_position === 0);
-    const vicePresidents = execs.filter((e) => e.exec_position === 1);
-    const coordinators = execs.filter((e) => e.exec_position === 2);
+    const presidents = execs.filter((e) => Number(e.exec_position) === 0);
+    const vicePresidents = execs.filter((e) => Number(e.exec_position) === 1);
+    const coordinators = execs.filter((e) => Number(e.exec_position) === 2);
+
 
     const handleMemberClick = (member: Exec) => {
         setActiveMember(member);
