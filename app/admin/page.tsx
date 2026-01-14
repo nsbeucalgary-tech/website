@@ -1,8 +1,15 @@
 import Link from "next/link";
 import { Calendar, Users, Handshake } from "lucide-react";
 import { colors } from "@/app/lib/helper";
+import { redirect } from "next/navigation";
+import { isAdminAuthenticated } from "../lib/auth";
 
-export default function AdminDashboard() {
+export default async function AdminDashboard() {
+    const isAuthed = await isAdminAuthenticated();
+
+    if (!isAuthed) {
+        redirect("/admin/login");
+    }
     return (
         <div>
             <h1
