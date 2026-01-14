@@ -25,3 +25,12 @@ export interface Exec {
 }
 
 export type NewExec = Omit<Exec, "exec_id">;
+
+export interface Sponsor {
+    company_id: number;
+    company_name: string;
+    company_logo: string;
+    company_status: number;
+}
+
+export type NewSponsor = Omit<Sponsor, "company_id">;

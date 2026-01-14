@@ -4,13 +4,15 @@ import NewsletterSection from "./components/NewsletterSection";
 import SponsorsSection from "./components/SponsorsSection";
 import WhatWeOffer from "./components/WhatWeOffer";
 import { imageDatabase, offerItems } from "./lib/helper";
+import { getAllSponsors } from "./lib/sponsorCall";
 
-export default function HomePage() {
+export default async function HomePage() {
+    const sponsors = await getAllSponsors();
     return (
         <div className="w-screen overflow-x-hidden">
             <HeroSection images={imageDatabase.hero} />
             <WhatWeOffer items={offerItems} />
-            <SponsorsSection sponsors={imageDatabase.sponsors} />
+            <SponsorsSection sponsors={sponsors} />
             <NewsletterSection />
         </div>
     );
