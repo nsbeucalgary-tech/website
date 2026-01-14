@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Plus, Pencil, Trash2, Calendar, Clock, MapPin, LinkIcon } from "lucide-react";
+import { Plus, Pencil, Trash2, Calendar, Clock, MapPin, LinkIcon, ArrowLeft, LogOut, Calendar1 } from "lucide-react";
 import { colors } from "@/app/lib/helper";
 import AddEventModal from "./AddEventModal";
 import { Event } from "@/app/lib/type";
@@ -9,6 +9,7 @@ import EditEventModal from "./EditEventModal";
 import { format } from "date-fns";
 import Image from "next/image";
 import DeleteModal from "./DeleteEventModal";
+import Link from "next/link";
 
 export default function AdminEventsPage({ events }: { events: Event[] }) {
     const [showAddModal, setShowAddModal] = useState(false);
@@ -21,18 +22,49 @@ export default function AdminEventsPage({ events }: { events: Event[] }) {
             <div className="flex items-center justify-between mb-8">
                 <h1
                     className="text-4xl font-extrabold"
-                    style={{ color: colors.black }}
+                    style={{
+                        color: colors.black,
+                        fontFamily: "nunito, sans-serif",
+                    }}
                 >
                     Manage Events
                 </h1>
 
-                <button
-                    onClick={() => setShowAddModal(true)}
-                    className="flex items-center gap-2 px-6 py-3 rounded-xl font-bold hover:scale-105 transition"
-                    style={{ backgroundColor: colors.primary, color: "white" }}
-                >
-                    <Plus size={20} /> Add Event
-                </button>
+                <div className="flex items-center gap-3">
+                    <Link
+                        href="/admin"
+                        className="flex items-center gap-2 px-6 py-3 rounded-xl text-black font-bold hover:scale-105 transition bg-gray-200 hover:bg-gray-300"
+                        style={{
+                            fontFamily: "nunito, sans-serif",
+                        }}
+                    >
+                        <ArrowLeft size={20} /> Back to Admin
+                    </Link>
+
+                    <button
+                        onClick={async () => {
+                            console.log("Signout clicked");
+                        }}
+                        className="flex items-center gap-2 px-6 py-3 rounded-xl font-bold hover:scale-105 transition text-white"
+                        style={{
+                            backgroundColor: colors.red,
+                            fontFamily: "nunito, sans-serif",
+                        }}
+                    >
+                        <LogOut size={20} /> Logout
+                    </button>
+
+                    <button
+                        onClick={() => setShowAddModal(true)}
+                        className="flex items-center gap-2 px-6 py-3 rounded-xl font-bold hover:scale-105 transition text-white"
+                        style={{
+                            backgroundColor: colors.primary,
+                            fontFamily: "nunito, sans-serif",
+                        }}
+                    >
+                        <Plus size={20} /> Add Events
+                    </button>
+                </div>
             </div>
 
             {/* Event Cards */}
@@ -165,6 +197,32 @@ export default function AdminEventsPage({ events }: { events: Event[] }) {
                     </div>
                 ))}
             </div>
+            {events.length === 0 && (
+                <div className="text-center py-20">
+                    <Calendar1
+                        className="w-24 h-24 mx-auto mb-4"
+                        style={{ color: colors.gray }}
+                    />
+                    <h3
+                        className="text-2xl font-bold mb-2"
+                        style={{
+                            color: colors.black,
+                            fontFamily: "nunito, sans-serif",
+                        }}
+                    >
+                        No Events Yet
+                    </h3>
+                    <p
+                        className="text-lg mb-6"
+                        style={{
+                            color: colors.gray,
+                            fontFamily: "nunito, sans-serif",
+                        }}
+                    >
+                        Click the &quot;Add Event&quot; button to get started
+                    </p>
+                </div>
+            )}
 
             {/* Modals */}
             {showAddModal && (

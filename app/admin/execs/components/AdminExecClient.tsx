@@ -8,12 +8,15 @@ import {
     Mail,
     Link as LinkIcon,
     User,
+    LogOut,
+    ArrowLeft,
 } from "lucide-react";
 import { colors } from "@/app/lib/helper";
 import { Exec } from "@/app/lib/type";
 import AddExecModal from "./AddExecModal";
 import EditExecModal from "./EditExecModal";
 import DeleteExecModal from "./DeleteExecModal";
+import Link from "next/link";
 
 export default function AdminExecPage({ execs }: { execs: Exec[] }) {
     const [showAddModal, setShowAddModal] = useState(false);
@@ -149,16 +152,41 @@ export default function AdminExecPage({ execs }: { execs: Exec[] }) {
                     Manage Execs
                 </h1>
 
-                <button
-                    onClick={() => setShowAddModal(true)}
-                    className="flex items-center gap-2 px-6 py-3 rounded-xl font-bold hover:scale-105 transition text-white"
-                    style={{
-                        backgroundColor: colors.primary,
-                        fontFamily: "nunito, sans-serif",
-                    }}
-                >
-                    <Plus size={20} /> Add Exec
-                </button>
+                <div className="flex items-center gap-3">
+                    <Link
+                        href="/admin"
+                        className="flex items-center gap-2 px-6 py-3 rounded-xl text-black font-bold hover:scale-105 transition bg-gray-300 hover:bg-gray-300"
+                        style={{
+                            fontFamily: "nunito, sans-serif",
+                        }}
+                    >
+                        <ArrowLeft size={20} /> Back to Admin
+                    </Link>
+
+                    <button
+                        onClick={async () => {
+                            console.log("Signout clicked")
+                        }}
+                        className="flex items-center gap-2 px-6 py-3 rounded-xl font-bold hover:scale-105 transition text-white"
+                        style={{
+                            backgroundColor: colors.red,
+                            fontFamily: "nunito, sans-serif",
+                        }}
+                    >
+                        <LogOut size={20} /> Logout
+                    </button>
+
+                    <button
+                        onClick={() => setShowAddModal(true)}
+                        className="flex items-center gap-2 px-6 py-3 rounded-xl font-bold hover:scale-105 transition text-white"
+                        style={{
+                            backgroundColor: colors.primary,
+                            fontFamily: "nunito, sans-serif",
+                        }}
+                    >
+                        <Plus size={20} /> Add Exec
+                    </button>
+                </div>
             </div>
 
             {/* Exec Cards - Grouped by Hierarchy */}

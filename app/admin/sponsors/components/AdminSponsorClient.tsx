@@ -1,13 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { Plus, Pencil, Trash2, Building2, Star } from "lucide-react";
+import { Plus, Pencil, Trash2, Building2, Star, ArrowLeft, LogOut } from "lucide-react";
 import { colors } from "@/app/lib/helper";
 import { Sponsor } from "@/app/lib/type";
 import AddSponsorModal from "./AddSponsorModal";
 import EditSponsorModal from "./EditSponsorModal";
 import DeleteSponsorModal from "./DeleteSponsorModal";
 import AdminSponsorTier from "./AdminSponsorTier";
+import Link from "next/link";
 
 export default function AdminSponsorClient({
     sponsors,
@@ -132,16 +133,41 @@ export default function AdminSponsorClient({
                     Manage Sponsors
                 </h1>
 
-                <button
-                    onClick={() => setShowAddModal(true)}
-                    className="flex items-center gap-2 px-6 py-3 rounded-xl font-bold hover:scale-105 transition text-white"
-                    style={{
-                        backgroundColor: colors.primary,
-                        fontFamily: "nunito, sans-serif",
-                    }}
-                >
-                    <Plus size={20} /> Add Sponsor
-                </button>
+                <div className="flex items-center gap-3">
+                    <Link
+                        href="/admin"
+                        className="flex items-center gap-2 px-6 py-3 rounded-xl text-black font-bold hover:scale-105 transition bg-gray-200 hover:bg-gray-300"
+                        style={{
+                            fontFamily: "nunito, sans-serif",
+                        }}
+                    >
+                        <ArrowLeft size={20} /> Back to Admin
+                    </Link>
+
+                    <button
+                        onClick={async () => {
+                            console.log("Signout clicked");
+                        }}
+                        className="flex items-center gap-2 px-6 py-3 rounded-xl font-bold hover:scale-105 transition text-white"
+                        style={{
+                            backgroundColor: colors.red,
+                            fontFamily: "nunito, sans-serif",
+                        }}
+                    >
+                        <LogOut size={20} /> Logout
+                    </button>
+
+                    <button
+                        onClick={() => setShowAddModal(true)}
+                        className="flex items-center gap-2 px-6 py-3 rounded-xl font-bold hover:scale-105 transition text-white"
+                        style={{
+                            backgroundColor: colors.primary,
+                            fontFamily: "nunito, sans-serif",
+                        }}
+                    >
+                        <Plus size={20} /> Add Sponsor
+                    </button>
+                </div>
             </div>
 
             {/* Sponsor Cards - Grouped by Status */}
