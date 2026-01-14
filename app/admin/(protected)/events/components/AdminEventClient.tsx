@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Plus, Pencil, Trash2, Calendar, Clock, MapPin, LinkIcon, ArrowLeft, LogOut, Calendar1 } from "lucide-react";
+import { Plus, Pencil, Trash2, Calendar, Clock, MapPin, LinkIcon, ArrowLeft, Calendar1 } from "lucide-react";
 import { colors } from "@/app/lib/helper";
 import AddEventModal from "./AddEventModal";
 import { Event } from "@/app/lib/type";
@@ -10,6 +10,7 @@ import { format } from "date-fns";
 import Image from "next/image";
 import DeleteModal from "./DeleteEventModal";
 import Link from "next/link";
+import LogoutButton from "@/app/admin/LogoutButton";
 
 export default function AdminEventsPage({ events }: { events: Event[] }) {
     const [showAddModal, setShowAddModal] = useState(false);
@@ -41,18 +42,7 @@ export default function AdminEventsPage({ events }: { events: Event[] }) {
                         <ArrowLeft size={20} /> Back to Admin
                     </Link>
 
-                    <button
-                        onClick={async () => {
-                            console.log("Signout clicked");
-                        }}
-                        className="flex items-center gap-2 px-6 py-3 rounded-xl font-bold hover:scale-105 transition text-white"
-                        style={{
-                            backgroundColor: colors.red,
-                            fontFamily: "nunito, sans-serif",
-                        }}
-                    >
-                        <LogOut size={20} /> Logout
-                    </button>
+                    <LogoutButton/>
 
                     <button
                         onClick={() => setShowAddModal(true)}

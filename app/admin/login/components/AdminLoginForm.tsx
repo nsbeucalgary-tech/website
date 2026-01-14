@@ -86,12 +86,12 @@ export default function AdminLoginForm() {
                             className="w-4 h-4"
                             style={{ color: colors.primary }}
                         />
-                        Email Address
+                        Username
                     </label>
                     <input
-                        name="email"
-                        type="email"
-                        placeholder="admin@example.com"
+                        name="username"
+                        type="text"
+                        placeholder="admin"
                         required
                         className="w-full border-2 rounded-xl px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#2bb463] transition-all"
                         style={{

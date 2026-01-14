@@ -34,3 +34,9 @@ export interface Sponsor {
 }
 
 export type NewSponsor = Omit<Sponsor, "company_id">;
+
+export interface Admin{
+    admin_id: number;
+    admin_username: string;
+    admin_password: string;
+}
