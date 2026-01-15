@@ -1,7 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { Plus, Pencil, Trash2, Calendar, Clock, MapPin, LinkIcon, ArrowLeft, Calendar1 } from "lucide-react";
+import {
+    Plus,
+    Pencil,
+    Trash2,
+    Calendar,
+    Clock,
+    MapPin,
+    LinkIcon,
+    ArrowLeft,
+    Calendar1,
+} from "lucide-react";
 import { colors } from "@/app/lib/helper";
 import AddEventModal from "./AddEventModal";
 import { Event } from "@/app/lib/type";
@@ -42,7 +52,7 @@ export default function AdminEventsPage({ events }: { events: Event[] }) {
                         <ArrowLeft size={20} /> Back to Admin
                     </Link>
 
-                    <LogoutButton/>
+                    <LogoutButton />
 
                     <button
                         onClick={() => setShowAddModal(true)}
@@ -62,8 +72,20 @@ export default function AdminEventsPage({ events }: { events: Event[] }) {
                 {events.map((event) => (
                     <div
                         key={event.event_id}
-                        className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border-2 overflow-hidden"
-                        style={{ borderColor: colors.gray }}
+                        className={`rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 cursor-pointer border-2 overflow-hidden
+                        } ${
+                            event.is_important
+                                ? "ring-1 ring-green-500 text-white"
+                                : ""
+                        }`}
+                        style={{
+                            borderColor: event.is_important
+                                ? colors.primary
+                                : colors.gray,
+                            backgroundColor: event.is_important
+                                ? colors.black
+                                : "white",
+                        }}
                     >
                         {/* Event Image/Poster */}
                         <div className="relative w-full h-48 bg-gray-200">
@@ -132,7 +154,13 @@ export default function AdminEventsPage({ events }: { events: Event[] }) {
                                         className="w-4 h-4 mt-0.5 flex-shrink-0"
                                         style={{ color: colors.yellow }}
                                     />
-                                    <span style={{ color: colors.black }}>
+                                    <span
+                                        style={{
+                                            color: !event.is_important
+                                                ? colors.black
+                                                : "white",
+                                        }}
+                                    >
                                         {event.event_time
                                             ? format(
                                                   new Date(event.event_time),
@@ -146,7 +174,13 @@ export default function AdminEventsPage({ events }: { events: Event[] }) {
                                         className="w-4 h-4 mt-0.5 flex-shrink-0"
                                         style={{ color: colors.red }}
                                     />
-                                    <span style={{ color: colors.black }}>
+                                    <span
+                                        style={{
+                                            color: !event.is_important
+                                                ? colors.black
+                                                : "white",
+                                        }}
+                                    >
                                         {event.event_location}
                                     </span>
                                 </div>
@@ -176,7 +210,9 @@ export default function AdminEventsPage({ events }: { events: Event[] }) {
                                 <p
                                     className="text-sm leading-relaxed"
                                     style={{
-                                        color: colors.black,
+                                        color: !event.is_important
+                                            ? colors.black
+                                            : "white",
                                         fontFamily: "nunito, sans-serif",
                                     }}
                                 >
