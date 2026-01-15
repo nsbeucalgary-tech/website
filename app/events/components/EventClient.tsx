@@ -152,7 +152,7 @@ export default function EventsClient({ events }: EventsClientProps) {
                         }}
                     >
                         Join us for exciting events, workshops, and networking
-                        opportunities
+                        opportunities.
                     </p>
                 </div>
             </section>
