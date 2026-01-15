@@ -23,15 +23,33 @@ export default function EventsClient({ events }: EventsClientProps) {
     // Get upcoming events (next 4)
     const upcomingEvents = useMemo(() => {
         const now = new Date();
-        return events
+
+        const upcoming = events
             .filter((event) => new Date(event.event_time) >= now)
             .sort(
                 (a, b) =>
                     new Date(a.event_time).getTime() -
                     new Date(b.event_time).getTime()
-            )
-            .slice(0, 4);
+            );
+
+        const importantEvent = upcoming.find((event) => event.is_important);
+
+        if (!importantEvent) {
+            // No important event → normal behavior
+            return upcoming.slice(0, 4);
+        }
+
+        // Remove the important event from the rest
+        const remaining = upcoming.filter(
+            (event) => event.event_id !== importantEvent.event_id
+        );
+
+        return [
+            importantEvent, // reserved spot
+            ...remaining.slice(0, 3), // fill remaining slots
+        ];
     }, [events]);
+
 
     // Get past events (next 4)
     const pastEvents = useMemo(() => {
@@ -74,12 +92,26 @@ export default function EventsClient({ events }: EventsClientProps) {
     }) => (
         <div
             onClick={() => setSelectedEvent(event)}
-            className={`bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 cursor-pointer border-2 overflow-hidden ${
+            className={`rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 cursor-pointer border-2 overflow-hidden ${
                 featured ? "md:col-span-1" : ""
-            }`}
-            style={{ borderColor: colors.gray }}
+            } ${event.is_important ? "ring-1 ring-green-500" : ""}`}
+            style={{
+                borderColor: event.is_important ? colors.primary : colors.gray,
+                backgroundColor: event.is_important ? colors.black : "white",
+            }}
         >
             <div className="relative w-full h-48 bg-gray-200">
+                {event.is_important && (
+                    <div className="absolute top-3 right-3 z-10 bg-green-500 rounded-full p-2 shadow-lg">
+                        <svg
+                            className="w-6 h-6 text-white"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                        >
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                    </div>
+                )}
                 {event.event_poster ? (
                     <Image
                         src={event.event_poster}
@@ -100,7 +132,9 @@ export default function EventsClient({ events }: EventsClientProps) {
                 <h3
                     className="text-xl font-bold mb-3"
                     style={{
-                        color: colors.primary,
+                        color: event.is_important
+                            ? colors.primary
+                            : colors.primary,
                         fontFamily: "nunito, sans-serif",
                     }}
                 >
@@ -115,7 +149,13 @@ export default function EventsClient({ events }: EventsClientProps) {
                             className="w-4 h-4 mt-0.5 flex-shrink-0"
                             style={{ color: colors.yellow }}
                         />
-                        <span style={{ color: colors.black }}>
+                        <span
+                            style={{
+                                color: event.is_important
+                                    ? "white"
+                                    : colors.black,
+                            }}
+                        >
                             {format(
                                 toDate(event.event_time),
                                 "MMMM d, yyyy 'at' h:mm a"
@@ -127,7 +167,13 @@ export default function EventsClient({ events }: EventsClientProps) {
                             className="w-4 h-4 mt-0.5 flex-shrink-0"
                             style={{ color: colors.red }}
                         />
-                        <span style={{ color: colors.black }}>
+                        <span
+                            style={{
+                                color: event.is_important
+                                    ? "white"
+                                    : colors.black,
+                            }}
+                        >
                             {event.event_location}
                         </span>
                     </div>
