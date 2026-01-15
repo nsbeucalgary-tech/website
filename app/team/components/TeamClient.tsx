@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Linkedin, Mail, X } from "lucide-react";
+import { Linkedin, Mail, User, X } from "lucide-react";
 import { colors } from "@/app/lib/helper";
 import { Exec } from "@/app/lib/type";
 
@@ -105,7 +105,8 @@ export default function TeamClient({ execs }: TeamClientProps) {
                             fontFamily: "nunito, sans-serif",
                         }}
                     >
-                        Meet the dedicated leaders driving NSBE UCalgary forward.
+                        Meet the dedicated leaders driving NSBE UCalgary
+                        forward.
                     </p>
                 </div>
             </section>
@@ -194,6 +195,23 @@ export default function TeamClient({ execs }: TeamClientProps) {
                     </div>
                 )}
             </div>
+            {execs.length === 0 && (
+                <div className="text-center">
+                    <User
+                        className="w-24 h-24 mx-auto mb-4"
+                        style={{ color: colors.gray }}
+                    />
+                    <h3
+                        className="text-2xl font-bold"
+                        style={{
+                            color: colors.black,
+                            fontFamily: "nunito, sans-serif",
+                        }}
+                    >
+                        Executive team information will be available soon
+                    </h3>
+                </div>
+            )}
 
             {/* Modal */}
             {activeMember && (
