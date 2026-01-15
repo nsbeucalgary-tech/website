@@ -3,7 +3,6 @@
 import { useRef, FormEvent } from "react";
 import {
     Linkedin,
-    MessageCircle,
     Instagram,
     Facebook,
     Twitter,
@@ -13,6 +12,7 @@ import {
 } from "lucide-react";
 import emailjs from "@emailjs/browser";
 import { colors } from "@/app/lib/helper";
+import { FaDiscord } from "react-icons/fa";
 
 export default function ContactPage() {
     const formRef = useRef<HTMLFormElement>(null);
@@ -263,7 +263,7 @@ export default function ContactPage() {
                                             colors.gray;
                                     }}
                                 >
-                                    <MessageCircle className="w-5 h-5 text-white" />
+                                    <FaDiscord className="w-5 h-5 text-white" />
                                 </a>
 
                                 <a

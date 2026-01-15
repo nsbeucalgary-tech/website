@@ -7,9 +7,9 @@ import {
     Linkedin,
     Instagram,
     Mail,
-    MessageCircle,
 } from "lucide-react";
 import { colors } from "../lib/helper";
+import { FaDiscord } from "react-icons/fa";
 
 export default function Footer() {
     const currentYear = new Date().getFullYear();
@@ -184,7 +184,7 @@ export default function Footer() {
                             e.currentTarget.style.boxShadow = "none";
                         }}
                     >
-                        <MessageCircle className="w-6 h-6 text-white" />
+                        <FaDiscord className="w-6 h-6 text-white" />
                     </a>
                 </div>
 
