@@ -33,6 +33,18 @@ export default function EventsClient({ events }: EventsClientProps) {
             .slice(0, 4);
     }, [events]);
 
+    // Get past events (next 4)
+    const pastEvents = useMemo(() => {
+        const now = new Date();
+        return events
+            .filter((event) => new Date(event.event_time) <= now)
+            .sort(
+                (a, b) =>
+                    new Date(a.event_time).getTime() -
+                    new Date(b.event_time).getTime()
+            )
+    }, [events]);
+
     // Get events for selected date
     const selectedDateEvents = useMemo(() => {
         return events.filter((event) =>
@@ -464,6 +476,51 @@ export default function EventsClient({ events }: EventsClientProps) {
                         </div>
                     )}
                 </div>
+            </section>
+
+            {/* Upcoming Events Section */}
+            <section className="max-w-7xl mx-auto px-4 py-16">
+                <h2
+                    className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-center mb-4"
+                    style={{
+                        fontFamily: "impact, sans-serif",
+                        color: colors.black,
+                    }}
+                >
+                    PAST EVENTS GALLERY
+                </h2>
+                <div
+                    className="w-24 h-1.5 mx-auto mb-12 rounded-full"
+                    style={{ backgroundColor: colors.primary }}
+                />
+
+                {pastEvents.length > 0 ? (
+                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        {pastEvents.map((event) => (
+                            <EventCard
+                                key={event.event_id}
+                                event={event}
+                                featured
+                            />
+                        ))}
+                    </div>
+                ) : (
+                    <div className="text-center">
+                        <Calendar1
+                            className="w-24 h-24 mx-auto mb-4"
+                            style={{ color: colors.gray }}
+                        />
+                        <h3
+                            className="text-2xl font-bold"
+                            style={{
+                                color: colors.black,
+                                fontFamily: "nunito, sans-serif",
+                            }}
+                        >
+                            No previous events
+                        </h3>
+                    </div>
+                )}
             </section>
 
             {/* CTA Section */}

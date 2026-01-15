@@ -2,7 +2,7 @@ export interface Event {
     event_id: number;
     event_name: string;
     event_location: string;
-    event_time: string;
+    event_time: Date;
     event_description: string;
     event_poster: string;
     is_important: boolean;

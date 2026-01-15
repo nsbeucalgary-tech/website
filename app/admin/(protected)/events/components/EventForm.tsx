@@ -16,11 +16,20 @@ export default function EventForm({
     onSubmitAction,
     onCancelAction,
 }: EventFormProps) {
+    function toLocalDateTimeInput(date: Date) {
+        const pad = (n: number) => String(n).padStart(2, "0");
+
+        return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(
+            date.getDate()
+        )}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+    }
+
     const [form, setForm] = useState<NewEvent>({
         event_name: initialData?.event_name ?? "",
         event_location: initialData?.event_location ?? "",
-        event_time:
-            initialData?.event_time ?? new Date().toISOString().slice(0, 16),
+        event_time: initialData?.event_time
+            ? (new Date(initialData.event_time))
+            : new Date(),
         event_description: initialData?.event_description ?? "",
         event_poster: initialData?.event_poster ?? "",
         is_important: initialData?.is_important ?? false,
@@ -35,8 +44,20 @@ export default function EventForm({
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => {
         const { name, value } = e.target;
-        setForm((prev) => ({ ...prev, [name]: value }));
+
+        if (name === "event_time") {
+            setForm((prev) => ({
+                ...prev,
+                event_time: new Date(value),
+            }));
+        } else {
+            setForm((prev) => ({
+                ...prev,
+                [name]: value,
+            }));
+        }
     };
+
 
     const handleCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm((prev) => ({ ...prev, is_important: e.target.checked }));
@@ -152,7 +173,7 @@ export default function EventForm({
                 <input
                     type="datetime-local"
                     name="event_time"
-                    value={form.event_time}
+                    value={toLocalDateTimeInput(form.event_time)}
                     onChange={handleChange}
                     required
                     className="w-full border-2 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:border-[#2bb463] transition-all"
@@ -205,7 +226,7 @@ export default function EventForm({
                 <input
                     type="url"
                     name="event_link"
-                    value={form.event_link??""}
+                    value={form.event_link ?? ""}
                     onChange={handleChange}
                     placeholder="e.g., https://www.example.com/event"
                     className="w-full border-2 rounded-xl px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#2bb463] transition-all"
