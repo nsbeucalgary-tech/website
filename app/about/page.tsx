@@ -1,9 +1,13 @@
-"use client";
-
+import { Metadata } from "next";
 import AboutVideo from "./components/AboutVideo";
 import Offerings from "./components/Offerings";
 import Statistics from "./components/Statistics";
 import { colors } from "@/app/lib/helper";
+
+export const metadata: Metadata = {
+    title: "About Us",
+    description: "Learn more about our mission, impact, and commitment to excellence in STEM.",
+};
 
 export default function AboutPage() {
     return (
