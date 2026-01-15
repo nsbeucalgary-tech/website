@@ -105,7 +105,7 @@ export default function TeamClient({ execs }: TeamClientProps) {
                             fontFamily: "nunito, sans-serif",
                         }}
                     >
-                        Meet the dedicated leaders driving NSBE UCalgary forward
+                        Meet the dedicated leaders driving NSBE UCalgary forward.
                     </p>
                 </div>
             </section>

@@ -467,7 +467,7 @@ export default function EventsClient({ events }: EventsClientProps) {
                         }}
                     >
                         Join NSBE UCalgary to stay updated on all our events and
-                        opportunities
+                        opportunities.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <a
