@@ -140,7 +140,7 @@ export default function TeamClient({ execs }: TeamClientProps) {
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
                             {presidents.map((member) => (
                                 <MemberCard
-                                    key={member.exec_ucid}
+                                    key={member.exec_id}
                                     member={member}
                                 />
                             ))}
@@ -163,7 +163,7 @@ export default function TeamClient({ execs }: TeamClientProps) {
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                             {vicePresidents.map((member) => (
                                 <MemberCard
-                                    key={member.exec_ucid}
+                                    key={member.exec_id}
                                     member={member}
                                 />
                             ))}
@@ -186,7 +186,7 @@ export default function TeamClient({ execs }: TeamClientProps) {
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                             {coordinators.map((member) => (
                                 <MemberCard
-                                    key={member.exec_ucid}
+                                    key={member.exec_id}
                                     member={member}
                                 />
                             ))}

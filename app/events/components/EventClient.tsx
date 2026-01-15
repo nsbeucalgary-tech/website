@@ -5,7 +5,7 @@ import Image from "next/image";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { format, isSameDay } from "date-fns";
-import { MapPin, Clock, Calendar as CalendarIcon, LinkIcon } from "lucide-react";
+import { MapPin, Clock, Calendar as CalendarIcon, LinkIcon, Calendar1 } from "lucide-react";
 import { colors } from "@/app/lib/helper";
 import "./EventCalendar.css";
 import { Value } from "react-calendar/dist/shared/types.js";
@@ -173,11 +173,33 @@ export default function EventsClient({ events }: EventsClientProps) {
                     style={{ backgroundColor: colors.primary }}
                 />
 
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    {upcomingEvents.map((event) => (
-                        <EventCard key={event.event_id} event={event} featured />
-                    ))}
-                </div>
+                {upcomingEvents.length > 0 ? (
+                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        {upcomingEvents.map((event) => (
+                            <EventCard
+                                key={event.event_id}
+                                event={event}
+                                featured
+                            />
+                        ))}
+                    </div>
+                ) : (
+                    <div className="text-center">
+                        <Calendar1
+                            className="w-24 h-24 mx-auto mb-4"
+                            style={{ color: colors.gray }}
+                        />
+                        <h3
+                            className="text-2xl font-bold"
+                            style={{
+                                color: colors.black,
+                                fontFamily: "nunito, sans-serif",
+                            }}
+                        >
+                            No upcoming events
+                        </h3>
+                    </div>
+                )}
             </section>
 
             {/* Calendar Section */}
@@ -262,10 +284,10 @@ export default function EventsClient({ events }: EventsClientProps) {
 
                     {/* Event Details */}
                     {(selectedDateEvents.length > 0 || selectedEvent) && (
-                        <div className="lg:w-1/2">
+                        <div className="lg:w-1/2 flex flex-col">
                             {selectedEvent ? (
                                 <div
-                                    className="bg-white rounded-2xl shadow-xl overflow-hidden border-2"
+                                    className="bg-white rounded-2xl shadow-xl overflow-hidden border-2 flex-1"
                                     style={{ borderColor: colors.primary }}
                                 >
                                     <div className="relative w-full h-64 bg-gray-200">
