@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { X, Calendar, MapPin, Clock, ArrowRight } from "lucide-react";
-import { format, parseISO } from "date-fns";
+import { format } from "date-fns";
 import { colors } from "./lib/helper";
 import Particles from "react-particles";
 import { Container, Engine } from "tsparticles-engine";
@@ -253,10 +253,10 @@ export default function CatchUpPopup({ events }: CatchUpPopupProps) {
                                                             }}
                                                         >
                                                             {format(
-                                                                parseISO(
+                                                                new Date(
                                                                     event.event_time
                                                                 ),
-                                                                "MMM d, h:mm a"
+                                                                "MMMM d, yyyy 'at' h:mm a"
                                                             )}
                                                         </span>
                                                     </div>
