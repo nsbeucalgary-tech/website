@@ -31,12 +31,23 @@ export interface Sponsor {
     company_name: string;
     company_logo: string;
     company_status: number;
+    company_link: string;
 }
 
 export type NewSponsor = Omit<Sponsor, "company_id">;
 
-export interface Admin{
+export interface Admin {
     admin_id: number;
     admin_username: string;
     admin_password: string;
 }
+
+export interface BusinessSponsor {
+    business_id: number;
+    business_name: string;
+    business_image: string;
+    business_discount_text: string;
+    business_website_link: string;
+}
+
+export type NewBusinessSponsor = Omit<BusinessSponsor, "business_id">;
