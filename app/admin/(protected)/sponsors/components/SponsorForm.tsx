@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Upload, X, Building2, Star } from "lucide-react";
+import { Upload, X, Building2, Star, Link } from "lucide-react";
 import { colors } from "@/app/lib/helper";
 import { NewSponsor, Sponsor } from "@/app/lib/type";
 
@@ -20,12 +20,13 @@ export default function SponsorForm({
         company_name: initialData?.company_name ?? "",
         company_logo: initialData?.company_logo ?? "",
         company_status: initialData?.company_status ?? 0,
+        company_link: initialData?.company_link ?? "",
     });
 
     const [uploading, setUploading] = useState(false);
 
     const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
     ) => {
         const { name, value } = e.target;
         setForm((prev) => ({
@@ -168,7 +169,7 @@ export default function SponsorForm({
                         className="px-3 py-1 rounded-full text-xs font-bold text-white flex items-center gap-1"
                         style={{
                             backgroundColor: getStatusColor(
-                                form.company_status
+                                form.company_status,
                             ),
                         }}
                     >
@@ -179,6 +180,30 @@ export default function SponsorForm({
                         {form.company_status === 3 && "Bronze"}
                     </div>
                 </div>
+            </div>
+            {/* Company Link */}
+            <div className="space-y-2">
+                <label
+                    className="flex items-center gap-2 font-bold text-sm text-gray-700"
+                    style={{ fontFamily: "nunito, sans-serif" }}
+                >
+                    <Link
+                        className="w-4 h-4"
+                        style={{ color: colors.primary }}
+                    />
+                    Company Website Link (Optional)
+                </label>
+                <input
+                    name="company_link"
+                    value={form.company_link}
+                    onChange={handleChange}
+                    placeholder="e.g., https://www.techcorp.com"
+                    className="w-full border-2 rounded-xl px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#2bb463] transition-all"
+                    style={{
+                        borderColor: colors.gray,
+                        fontFamily: "nunito, sans-serif",
+                    }}
+                />
             </div>
 
             {/* Logo Upload Section */}
@@ -201,7 +226,7 @@ export default function SponsorForm({
                     >
                         <img
                             src={form.company_logo}
-                            alt="Company logo preview"
+                            alt={form.company_name}
                             className="max-w-full max-h-full object-contain"
                         />
                         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
